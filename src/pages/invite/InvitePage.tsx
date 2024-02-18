@@ -50,13 +50,13 @@ const InvitePage = () => {
 			navigate('/');
 			return;
 		}
-		if (server)
+		if (server && isLoaded)
 			mutate({
 				serverId: server?.id,
 				profileId: user?.id,
 				role: MemberRole.GUEST,
 			});
-	}, [server]);
+	}, [server, isLoaded]);
 
 	if (error) {
 		navigate('/');
