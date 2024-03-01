@@ -9,7 +9,7 @@ Chat Hub App is a Discord-based system that allows you to chat and hold meetings
 
 ## Demo (You can access demo by bellow link)
 - https://chathub-react.netlify.app/
-- After login you can type this link server invite: https://discordx-react.netlify.app/invite/5d7987da-0346-4180-9b63-af84e092b02f for easy join server and demo function
+- After login you can type this link server invite: https://chathub-react.netlify.app/invite/5d7987da-0346-4180-9b63-af84e092b02f for easy join server and demo function
 
 ## Geting start
 To run the app, simply do:
