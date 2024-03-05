@@ -8,10 +8,10 @@ import {
 	useTracks,
 } from '@livekit/components-react';
 import '@livekit/components-styles';
-import axios from 'axios';
 import { Track } from 'livekit-client';
 import { useEffect, useState } from 'react';
 import Loading from './Loading';
+import { axiosInstance } from '@/services/api-client';
 
 interface MediaRoomProps {
 	chatId: string;
@@ -26,13 +26,14 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
 	const [token, setToken] = useState<string>('');
 	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => {
-		const getToken = async () => {
+		const getLiveKitToken = async () => {
 			try {
 				setIsLoading(true);
-				const { data } = await axios.post('http://localhost:5173/token', {
-					user: user?.id,
-					room: chatId,
-				});
+				const { data } = await axiosInstance.get(
+					`${import.meta.env.VITE_BASE_URL}/channels/token?user=${
+						user?.id
+					}&room=${chatId}`
+				);
 				setToken(data);
 			} catch (error) {
 				console.log(error);
@@ -40,7 +41,7 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
 				setIsLoading(false);
 			}
 		};
-		if (isLoaded) getToken();
+		if (isLoaded) getLiveKitToken();
 	}, [isLoaded]);
 
 	if (isLoading || !isLoaded) return <Loading />;

@@ -13,6 +13,7 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
+import { getToken } from '@/services/api-client';
 
 type createConversationProps = {
 	memberOneId?: string;
@@ -80,7 +81,9 @@ const ConversationPage = () => {
 
 	const connectSocket = async (savedConversationId: string) => {
 		const connection = new HubConnectionBuilder()
-			.withUrl(`${import.meta.env.VITE_BASE_URL}/chat/directMessage`)
+			.withUrl(`${import.meta.env.VITE_BASE_URL}/chat/directMessage`, {
+				accessTokenFactory: () => `Bearer ${getToken('__session')}`,
+			})
 			.configureLogging(LogLevel.Information)
 			.build();
 

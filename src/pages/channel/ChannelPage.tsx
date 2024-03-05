@@ -12,6 +12,7 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
+import { getToken } from '@/services/api-client';
 
 const ChannelIdPage = () => {
 	const setConnection = useServerStore((s) => s.setConnectionChannel);
@@ -49,7 +50,9 @@ const ChannelIdPage = () => {
 	useEffect(() => {
 		const connectSocket = async () => {
 			const connection = new HubConnectionBuilder()
-				.withUrl(`${import.meta.env.VITE_BASE_URL}/chat/message`)
+				.withUrl(`${import.meta.env.VITE_BASE_URL}/chat/message`, {
+					accessTokenFactory: () => `Bearer ${getToken('__session')}`,
+				})
 				.configureLogging(LogLevel.Information)
 				.build();
 
